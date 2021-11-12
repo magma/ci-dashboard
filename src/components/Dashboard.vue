@@ -52,7 +52,11 @@ export default {
           {
             key: 'm_time',
             label: 'Time',
-            sortable: false
+            sortable: false,
+            formatter: value => {
+              var date = new Date(value*1000);
+              return date.toLocaleString("en-US", { year: '2-digit', month: 'numeric', day: 'numeric' , hour: 'numeric', minute: 'numeric'})
+            },
           },
           {
             key: 'm_run_id',
@@ -105,19 +109,19 @@ export default {
       this.db_data = dbObject;
       this.items = []
       for (const [key, build] of Object.entries(dbObject.builds)) {
-        var date = new Date(build.metadata.timestamp*1000);
         // get reports
         var spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "not_present"};
         this.items.push(
           {
             build_id: key,
-            m_time: date.toLocaleString("en-US", { year: '2-digit', month: 'numeric', day: 'numeric' , hour: 'numeric', minute: 'numeric'}),
+            m_time: build.metadata.timestamp,
             m_run_id: build.metadata["github:run_id"],
             m_actor: build.metadata["github:actor"],
             b_agw: build.agw,
             w_spirent: spirent_report,
           })
       }
+      //console.log(this.items)
     },
     show_html: function (message) {
       var wnd = window.open("", "Test Report", "_blank");
