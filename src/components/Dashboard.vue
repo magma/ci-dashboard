@@ -52,7 +52,7 @@ export default {
           {
             key: 'm_time',
             label: 'Time',
-            sortable: true
+            sortable: false
           },
           {
             key: 'm_run_id',
