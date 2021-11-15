@@ -33,7 +33,7 @@
       <template #thead-top>
         <b-tr>
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
-          <b-th variant="light" colspan="3">Metadata</b-th>
+          <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="1">Builds</b-th>
           <b-th variant="primary" colspan="1">Workers</b-th>
         </b-tr>
@@ -81,6 +81,10 @@ export default {
           {
             key: 'm_run_id',
             label: 'Run',
+          },
+          {
+            key: 'm_branch',
+            label: 'Branch',
           },
           {
             key: 'm_actor',
@@ -143,12 +147,15 @@ export default {
       for (const [key, build] of Object.entries(dbObject.builds)) {
         // get reports
         var spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "not_present"};
+        var branch_path = build.metadata["github:ref"].split('/')
+        var branch_name = branch_path[branch_path.length - 1]
         this.items.push(
           {
             build_id: key,
             m_time: build.metadata.timestamp,
             m_run_id: build.metadata["github:run_id"],
             m_actor: build.metadata["github:actor"],
+            m_branch: branch_name,
             b_agw: build.agw,
             w_spirent: spirent_report,
           })
