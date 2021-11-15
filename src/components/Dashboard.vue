@@ -1,6 +1,24 @@
 <template>
   <div class="dashboard">
+    <div>
+      <b-row style="margin:auto">
+        <b-col cols="auto" class="p-1">
+          <b-pagination
+          v-model="currentPage"
+          :total-rows="num_of_rows"
+          aria-controls="dashboard-table"
+          align="right"
+          :per-page="rowsPerPage"
+          ></b-pagination>
+        </b-col>
+        <b-col cols="auto" class="p-1" style="margin-left:15pt">
+          Rows per page <b-form-select v-model="rowsPerPage" :options="pageLengthOptions" style="width:50pt" align="right"></b-form-select>
+        </b-col>
+      </b-row>
+    </div>
+
     <b-table
+      id="dashboard-table"
       striped
       hover
       bordered
@@ -9,6 +27,8 @@
       :items="items"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
+      :per-page="rowsPerPage"
+      :current-page="currentPage"
     >
       <template #thead-top>
         <b-tr>
@@ -102,7 +122,19 @@ export default {
             }
           },
         ],
+      currentPage: 1,
+      rowsPerPage: 20,
+      pageLengthOptions: [
+        { value: 20, text: '20' },
+        { value: 50, text: '50' },
+        { value: 100, text: '100' },
+      ]
     };
+  },
+  computed: {
+    num_of_rows() {
+      return this.items.length
+    }
   },
   methods: {
     onDataChange(dbObject) {
@@ -148,7 +180,7 @@ export default {
 </script>
 
 <style>
-.tbl_dashboard {
+.dashboard {
   width: 90%;
   margin-top: 20pt;
   margin-left: auto;
