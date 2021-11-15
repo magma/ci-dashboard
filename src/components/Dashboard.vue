@@ -93,7 +93,7 @@ export default {
               let newValue = {
                 "icon": "check-square-fill",
                 "variant": "success",
-                "msg": value.artifacts
+                "msg": value
               }
               if (value.valid != true) {
                 newValue.icon = "x-square-fill"
