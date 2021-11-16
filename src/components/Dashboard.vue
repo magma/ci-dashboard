@@ -24,12 +24,17 @@
       bordered
       class="tbl_dashboard"
       :fields="fields"
-      :items="items"
+      :items="filtered"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :per-page="rowsPerPage"
       :current-page="currentPage"
     >
+      <template slot="top-row" slot-scope="{ fields }">
+        <td v-for="field in fields" :key="field.key">
+          <input v-if="field.filter" v-model="filters[field.key]" placeholder="filter">
+        </td>
+      </template>
       <template #thead-top>
         <b-tr>
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
@@ -66,6 +71,10 @@ export default {
       sortBy: 'm_time',
       sortDesc: true,
       items: [],
+      filters: {
+        branch: '',
+        actor: '',
+      },
       fields: [
           {
             key: 'build_id',
@@ -88,10 +97,12 @@ export default {
           {
             key: 'm_branch',
             label: 'Branch',
+            filter: true
           },
           {
             key: 'm_actor',
             label: 'Actor',
+            filter: true
           },
           {
             key: 'b_agw',
@@ -163,6 +174,13 @@ export default {
   computed: {
     num_of_rows() {
       return this.items.length
+    },
+    filtered () {
+      const filtered = this.items.filter(item => {
+        return Object.keys(this.filters).every(key =>
+            String(item[key]).includes(this.filters[key]))
+      })
+      return filtered.length > 0 ? filtered : []
     }
   },
   methods: {
