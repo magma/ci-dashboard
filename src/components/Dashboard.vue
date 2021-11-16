@@ -34,7 +34,7 @@
         <b-tr>
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
-          <b-th variant="info" colspan="1">Builds</b-th>
+          <b-th variant="info" colspan="2">Builds</b-th>
           <b-th variant="primary" colspan="1">Workers</b-th>
         </b-tr>
       </template>
@@ -42,6 +42,9 @@
         <a :href="`https://github.com/magma/magma/actions/runs/${data.value}`" target="_blank">{{ data.value }}</a>
       </template>
       <template #cell(b_agw)="data">
+        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(b_feg)="data">
         <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
       <template #cell(w_spirent)="data">
@@ -99,7 +102,29 @@ export default {
                 "variant": "success",
                 "msg": value
               }
-              if (value.valid != true) {
+              if (value == null) {
+                newValue.icon = "square"
+                newValue.variant = "secondary"
+              } else if (value.valid != true) {
+                newValue.icon = "x-square-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
+          {
+            key: 'b_feg',
+            label: 'FEG',
+            formatter: value => {
+              let newValue = {
+                "icon": "check-square-fill",
+                "variant": "success",
+                "msg": value
+              }
+              if (value == null) {
+                newValue.icon = "square"
+                newValue.variant = "secondary"
+              } else if (value.valid != true) {
                 newValue.icon = "x-square-fill"
                 newValue.variant = "danger"
               }
@@ -157,6 +182,7 @@ export default {
             m_actor: build.metadata["github:actor"],
             m_branch: branch_name,
             b_agw: build.agw,
+            b_feg: build.feg,
             w_spirent: spirent_report,
           })
       }
