@@ -109,15 +109,15 @@ export default {
             label: 'AGW',
             formatter: value => {
               let newValue = {
-                "icon": "check-square-fill",
+                "icon": "check-circle-fill",
                 "variant": "success",
                 "msg": value
               }
               if (value == null) {
-                newValue.icon = "square"
+                newValue.icon = "circle"
                 newValue.variant = "secondary"
               } else if (value.valid != true) {
-                newValue.icon = "x-square-fill"
+                newValue.icon = "exclamation-circle-fill"
                 newValue.variant = "danger"
               }
               return newValue
@@ -128,15 +128,15 @@ export default {
             label: 'FEG',
             formatter: value => {
               let newValue = {
-                "icon": "check-square-fill",
+                "icon": "check-circle-fill",
                 "variant": "success",
                 "msg": value
               }
               if (value == null) {
-                newValue.icon = "square"
+                newValue.icon = "circle"
                 newValue.variant = "secondary"
               } else if (value.valid != true) {
-                newValue.icon = "x-square-fill"
+                newValue.icon = "exclamation-circle-fill"
                 newValue.variant = "danger"
               }
               return newValue
@@ -147,15 +147,15 @@ export default {
             label: 'FB Spirent',
             formatter: value => {
               let newValue = {
-                "icon": "square",
+                "icon": "circle",
                 "variant": "secondary",
                 "msg": value.report
               }
               if (value.verdict == "pass") {
-                newValue.icon = "check-square-fill"
+                newValue.icon = "check-circle-fill"
                 newValue.variant = "success"
               } else if(value.verdict == "fail") {
-                newValue.icon = "x-square-fill"
+                newValue.icon = "exclamation-circle-fill"
                 newValue.variant = "danger"
               }
               return newValue
