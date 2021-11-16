@@ -39,7 +39,7 @@
         <b-tr>
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
-          <b-th variant="info" colspan="2">Builds</b-th>
+          <b-th variant="info" colspan="5">Builds</b-th>
           <b-th variant="primary" colspan="1">Workers</b-th>
         </b-tr>
       </template>
@@ -50,6 +50,15 @@
         <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
       <template #cell(b_feg)="data">
+        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(b_orc8r)="data">
+        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(b_nms)="data">
+        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(b_cwag)="data">
         <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
       <template #cell(w_spirent)="data">
@@ -143,6 +152,63 @@ export default {
             }
           },
           {
+            key: 'b_orc8r',
+            label: 'ORC8R',
+            formatter: value => {
+              let newValue = {
+                "icon": "check-circle-fill",
+                "variant": "success",
+                "msg": value
+              }
+              if (value == null) {
+                newValue.icon = "circle"
+                newValue.variant = "secondary"
+              } else if (value.valid != true) {
+                newValue.icon = "exclamation-circle-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
+          {
+            key: 'b_nms',
+            label: 'NMS',
+            formatter: value => {
+              let newValue = {
+                "icon": "check-circle-fill",
+                "variant": "success",
+                "msg": value
+              }
+              if (value == null) {
+                newValue.icon = "circle"
+                newValue.variant = "secondary"
+              } else if (value.valid != true) {
+                newValue.icon = "exclamation-circle-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
+          {
+            key: 'b_cwag',
+            label: 'CWAG',
+            formatter: value => {
+              let newValue = {
+                "icon": "check-circle-fill",
+                "variant": "success",
+                "msg": value
+              }
+              if (value == null) {
+                newValue.icon = "circle"
+                newValue.variant = "secondary"
+              } else if (value.valid != true) {
+                newValue.icon = "exclamation-circle-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
+          {
             key: 'w_spirent',
             label: 'FB Spirent',
             formatter: value => {
@@ -201,6 +267,9 @@ export default {
             m_branch: branch_name,
             b_agw: build.agw,
             b_feg: build.feg,
+            b_orc8r: build.orc8r,
+            b_nms: build.nms,
+            b_cwag: build.cwag,
             w_spirent: spirent_report,
           })
       }
