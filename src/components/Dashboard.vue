@@ -43,6 +43,9 @@
           <b-th variant="primary" colspan="1">Workers</b-th>
         </b-tr>
       </template>
+      <template #cell(build_id)="data">
+        <a :href="`https://github.com/magma/magma/commit/${data.value}`" target="_blank">{{ data.value }}</a>
+      </template>
       <template #cell(m_run_id)="data">
         <a :href="`https://github.com/magma/magma/actions/runs/${data.value}`" target="_blank">{{ data.value }}</a>
       </template>
@@ -88,7 +91,10 @@ export default {
           {
             key: 'build_id',
             label: 'Build ID',
-            sortable: false
+            sortable: false,
+            formatter: value => {
+              return value.substring(0,8)
+            }
           },
           {
             key: 'm_time',
@@ -96,7 +102,7 @@ export default {
             sortable: false,
             formatter: value => {
               var date = new Date(value*1000);
-              return date.toLocaleString("en-US", { year: '2-digit', month: 'numeric', day: 'numeric' , hour: 'numeric', minute: 'numeric'})
+              return date.toLocaleString("en-US", { year: '2-digit', month: 'numeric', day: 'numeric' , hour: 'numeric', minute: 'numeric', hour12: false})
             },
           },
           {
