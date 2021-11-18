@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="5">Builds</b-th>
-          <b-th variant="primary" colspan="1">Workers</b-th>
+          <b-th variant="primary" colspan="2">Workers</b-th>
         </b-tr>
       </template>
       <template #cell(build_id)="data">
@@ -65,6 +65,9 @@
         <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
       <template #cell(w_spirent)="data">
+        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(w_tvm)="data">
         <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
     </b-table>
@@ -233,6 +236,25 @@ export default {
               return newValue
             }
           },
+          {
+            key: 'w_tvm',
+            label: 'FB TVM',
+            formatter: value => {
+              let newValue = {
+                "icon": "circle",
+                "variant": "secondary",
+                "msg": value.report
+              }
+              if (value.verdict == "pass") {
+                newValue.icon = "check-circle-fill"
+                newValue.variant = "success"
+              } else if(value.verdict == "fail") {
+                newValue.icon = "exclamation-circle-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
         ],
       currentPage: 1,
       rowsPerPage: 20,
@@ -260,10 +282,19 @@ export default {
       this.db_data = dbObject;
       this.items = []
       for (const [key, build] of Object.entries(dbObject.builds)) {
-        // get reports
-        var spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "not_present"};
         var branch_path = build.metadata["github:ref"].split('/')
         var branch_name = branch_path[branch_path.length - 1]
+
+        // get reports
+        var spirent_report = {};
+        if (dbObject.workers.fb_lab_spirent.reports) {
+          spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "not_present"};
+        }
+        var tvm_report = {};
+        if (dbObject.workers.fb_lab_tvm.reports) {
+          tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "not_present"};
+        }
+
         this.items.push(
           {
             build_id: key,
@@ -277,6 +308,7 @@ export default {
             b_nms: build.nms,
             b_cwag: build.cwag,
             w_spirent: spirent_report,
+            w_tvm: tvm_report,
           })
       }
       //console.log(this.items)
