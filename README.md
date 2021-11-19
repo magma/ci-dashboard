@@ -18,3 +18,18 @@ npm run serve
 firestore login
 firestore deploy
 ```
+---
+### Build docker images
+
+build docker image for ci-dashboard
+```bash
+docker build -t ci-dashboard .
+```
+
+Start ci-dashboard server
+```bash
+docker run --rm -it -p 8080:8080 ci-dashboard
+```
+> The above command is for development use for now.
+
+
