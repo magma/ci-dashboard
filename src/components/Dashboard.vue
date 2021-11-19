@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="5">Builds</b-th>
-          <b-th variant="primary" colspan="2">Workers</b-th>
+          <b-th variant="primary" colspan="3">Workers</b-th>
         </b-tr>
       </template>
       <template #cell(build_id)="data">
@@ -68,6 +68,9 @@
         <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
       <template #cell(w_tvm)="data">
+        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+      </template>
+      <template #cell(w_wl5g)="data">
         <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
       </template>
     </b-table>
@@ -255,6 +258,25 @@ export default {
               return newValue
             }
           },
+          {
+            key: 'w_wl5g',
+            label: 'WL 5G',
+            formatter: value => {
+              let newValue = {
+                "icon": "circle",
+                "variant": "secondary",
+                "msg": value.report
+              }
+              if (value.verdict == "pass") {
+                newValue.icon = "check-circle-fill"
+                newValue.variant = "success"
+              } else if(value.verdict == "fail") {
+                newValue.icon = "exclamation-circle-fill"
+                newValue.variant = "danger"
+              }
+              return newValue
+            }
+          },
         ],
       currentPage: 1,
       rowsPerPage: 20,
@@ -294,6 +316,10 @@ export default {
         if (dbObject.workers.fb_lab_tvm.reports) {
           tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "not_present"};
         }
+        var wl5g_report = {};
+        if (dbObject.workers.wl_lab_5g.reports) {
+          wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "not_present"};
+        }
 
         this.items.push(
           {
@@ -309,6 +335,7 @@ export default {
             b_cwag: build.cwag,
             w_spirent: spirent_report,
             w_tvm: tvm_report,
+            w_wl5g: wl5g_report,
           })
       }
       //console.log(this.items)
