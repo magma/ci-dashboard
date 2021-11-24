@@ -43,39 +43,12 @@
           <b-th variant="primary" colspan="4">Workers</b-th>
         </b-tr>
       </template>
-      <template #cell(build_id)="data">
-        <a :href="`https://github.com/magma/magma/commit/${data.value}`" target="_blank">{{ data.value }}</a>
+      <template #cell()="data">
+        <b-icon v-if="data.field.type === 'pass_fail'" v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+        <a v-else-if="data.field.type === 'link'" :href="`${data.field.link_prefix}${data.value}`" target="_blank">{{ data.value }}</a>
+        <div v-else> {{ data.value }} </div>
       </template>
-      <template #cell(m_run_id)="data">
-        <a :href="`https://github.com/magma/magma/actions/runs/${data.value}`" target="_blank">{{ data.value }}</a>
-      </template>
-      <template #cell(b_agw)="data">
-        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(b_feg)="data">
-        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(b_orc8r)="data">
-        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(b_nms)="data">
-        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(b_cwag)="data">
-        <b-icon v-on:click="show_json(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(w_spirent)="data">
-        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(w_tvm)="data">
-        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(w_wl5g)="data">
-        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
-      <template #cell(w_lte_integ)="data">
-        <b-icon v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
-      </template>
+
     </b-table>
   </div>
 </template>
@@ -100,6 +73,8 @@ export default {
           {
             key: 'build_id',
             label: 'Build ID',
+            type: 'link',
+            link_prefix: 'https://github.com/magma/magma/commit/',
             sortable: false,
             formatter: value => {
               return value.substring(0,8)
@@ -117,11 +92,13 @@ export default {
           {
             key: 'm_run_id',
             label: 'Run',
+            type: 'link',
+            link_prefix: 'https://github.com/magma/magma/actions/runs/',
           },
           {
             key: 'm_branch',
             label: 'Branch',
-            filter: true
+            filter: true,
           },
           {
             key: 'm_actor',
@@ -131,173 +108,56 @@ export default {
           {
             key: 'b_agw',
             label: 'AGW',
-            formatter: value => {
-              let newValue = {
-                "icon": "check-circle-fill",
-                "variant": "success",
-                "msg": value
-              }
-              if (value == null) {
-                newValue.icon = "circle"
-                newValue.variant = "secondary"
-              } else if (value.valid != true) {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'build_formatter',
           },
           {
             key: 'b_feg',
             label: 'FEG',
-            formatter: value => {
-              let newValue = {
-                "icon": "check-circle-fill",
-                "variant": "success",
-                "msg": value
-              }
-              if (value == null) {
-                newValue.icon = "circle"
-                newValue.variant = "secondary"
-              } else if (value.valid != true) {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'build_formatter',
           },
           {
             key: 'b_orc8r',
             label: 'ORC8R',
-            formatter: value => {
-              let newValue = {
-                "icon": "check-circle-fill",
-                "variant": "success",
-                "msg": value
-              }
-              if (value == null) {
-                newValue.icon = "circle"
-                newValue.variant = "secondary"
-              } else if (value.valid != true) {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'build_formatter',
           },
           {
             key: 'b_nms',
             label: 'NMS',
-            formatter: value => {
-              let newValue = {
-                "icon": "check-circle-fill",
-                "variant": "success",
-                "msg": value
-              }
-              if (value == null) {
-                newValue.icon = "circle"
-                newValue.variant = "secondary"
-              } else if (value.valid != true) {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'build_formatter',
           },
           {
             key: 'b_cwag',
             label: 'CWAG',
-            formatter: value => {
-              let newValue = {
-                "icon": "check-circle-fill",
-                "variant": "success",
-                "msg": value
-              }
-              if (value == null) {
-                newValue.icon = "circle"
-                newValue.variant = "secondary"
-              } else if (value.valid != true) {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'build_formatter',
           },
           {
             key: 'w_spirent',
             label: 'FB Spirent',
-            formatter: value => {
-              let newValue = {
-                "icon": "circle",
-                "variant": "secondary",
-                "msg": value.report
-              }
-              if (value.verdict == "pass") {
-                newValue.icon = "check-circle-fill"
-                newValue.variant = "success"
-              } else if(value.verdict == "fail") {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
           },
           {
             key: 'w_tvm',
             label: 'FB TVM',
-            formatter: value => {
-              let newValue = {
-                "icon": "circle",
-                "variant": "secondary",
-                "msg": value.report
-              }
-              if (value.verdict == "pass") {
-                newValue.icon = "check-circle-fill"
-                newValue.variant = "success"
-              } else if(value.verdict == "fail") {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
           },
           {
             key: 'w_wl5g',
             label: 'WL 5G',
-            formatter: value => {
-              let newValue = {
-                "icon": "circle",
-                "variant": "secondary",
-                "msg": value.report
-              }
-              if (value.verdict == "pass") {
-                newValue.icon = "check-circle-fill"
-                newValue.variant = "success"
-              } else if(value.verdict == "fail") {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            }
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
           },
           {
             key: 'w_lte_integ',
             label: 'LTE INTEG',
-            formatter: value => {
-              let newValue = {
-                "icon": "circle",
-                "variant": "secondary",
-                "msg": value.report
-              }
-              if (value.verdict == "pass") {
-                newValue.icon = "check-circle-fill"
-                newValue.variant = "success"
-              } else if(value.verdict == "fail") {
-                newValue.icon = "exclamation-circle-fill"
-                newValue.variant = "danger"
-              }
-              return newValue
-            },
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
           },
         ],
       currentPage: 1,
@@ -366,6 +226,36 @@ export default {
           })
       }
       //console.log(this.items)
+    },
+    test_worker_formatter(value) {
+      let newValue = {
+        "icon": "circle",
+        "variant": "secondary",
+        "msg": value.report
+      }
+      if (value.verdict == "pass") {
+        newValue.icon = "check-circle-fill"
+        newValue.variant = "success"
+      } else if(value.verdict == "fail") {
+        newValue.icon = "exclamation-circle-fill"
+        newValue.variant = "danger"
+      }
+      return newValue
+    },
+    build_formatter(value) {
+      let newValue = {
+        "icon": "check-circle-fill",
+        "variant": "success",
+        "msg": value
+      }
+      if (value == null) {
+        newValue.icon = "circle"
+        newValue.variant = "secondary"
+      } else if (value.valid != true) {
+        newValue.icon = "exclamation-circle-fill"
+        newValue.variant = "danger"
+      }
+      return newValue
     },
     show_html: function (message) {
       var wnd = window.open("", "Test Report", "_blank");
