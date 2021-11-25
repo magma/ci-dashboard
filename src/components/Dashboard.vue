@@ -258,8 +258,10 @@ export default {
       return newValue
     },
     show_html: function (message) {
+      // Workaround if window already open
       var wnd = window.open("", "Test Report", "_blank");
-      wnd.document.body.innerHTML = "";
+      wnd.close()
+      wnd = window.open("", "Test Report", "_blank");
       wnd.document.write('<title>Report</title>');
       wnd.document.write(message);
     },
@@ -267,6 +269,8 @@ export default {
       var htmlStringify = require('html-stringify');
       var data = htmlStringify(message);
       var wnd = window.open("", "JSON View", "_blank");
+      wnd.close()
+      wnd = window.open("", "JSON View", "_blank");
       wnd.document.body.innerHTML = "";
       wnd.document.write('<title>JSON</title>');
       wnd.document.write(data);
