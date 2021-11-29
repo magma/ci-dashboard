@@ -159,6 +159,12 @@ export default {
             type: 'pass_fail',
             formatter: 'test_worker_formatter',
           },
+          {
+            key: 'w_cwf_integ',
+            label: 'LTE INTEG',
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
+          },
         ],
       currentPage: 1,
       rowsPerPage: 20,
@@ -206,6 +212,10 @@ export default {
         if (dbObject.workers.lte_integ_test.reports) {
           lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "not_present"};
         }
+        var cwf_integ_report = {};
+        if (dbObject.workers.cwf_integ_test && dbObject.workers.cwf_integ_test.reports) {
+          cwf_integ_report = (key in dbObject.workers.cwf_integ_test.reports) ? dbObject.workers.cwf_integ_test.reports[key] : {"verdict": "not_present"};
+        }
 
         this.items.push(
           {
@@ -223,6 +233,7 @@ export default {
             w_tvm: tvm_report,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
+            w_cwf_integ: cwf_integ_report,
           })
       }
       //console.log(this.items)
