@@ -44,7 +44,7 @@
         </b-tr>
       </template>
       <template #cell()="data">
-        <b-icon v-if="data.field.type === 'pass_fail'" v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`"></b-icon>
+        <b-icon v-if="data.field.type === 'pass_fail'" v-on:click="show_html(data.value.msg)" :icon="`${data.value.icon}`" scale="2" :variant="`${data.value.variant}`" style="cursor:pointer"></b-icon>
         <a v-else-if="data.field.type === 'link'" :href="`${data.field.link_prefix}${data.value}`" target="_blank">{{ data.value }}</a>
         <div v-else> {{ data.value }} </div>
       </template>
@@ -243,10 +243,12 @@ export default {
       return newValue
     },
     build_formatter(value) {
+      var htmlStringify = require('html-stringify');
+      var msg = htmlStringify(value);
       let newValue = {
         "icon": "check-circle-fill",
         "variant": "success",
-        "msg": value
+        "msg": msg
       }
       if (value == null) {
         newValue.icon = "circle"
@@ -264,16 +266,6 @@ export default {
       wnd = window.open("", "Test Report", "_blank");
       wnd.document.write('<title>Report</title>');
       wnd.document.write(message);
-    },
-    show_json: function (message) {
-      var htmlStringify = require('html-stringify');
-      var data = htmlStringify(message);
-      var wnd = window.open("", "JSON View", "_blank");
-      wnd.close()
-      wnd = window.open("", "JSON View", "_blank");
-      wnd.document.body.innerHTML = "";
-      wnd.document.write('<title>JSON</title>');
-      wnd.document.write(data);
     }
   },
   mounted() {
