@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="5">Builds</b-th>
-          <b-th variant="primary" colspan="4">Workers</b-th>
+          <b-th variant="primary" colspan="5">Workers</b-th>
         </b-tr>
       </template>
       <template #cell()="data">
@@ -198,23 +198,23 @@ export default {
         // get reports
         var spirent_report = {};
         if (dbObject.workers.fb_lab_spirent.reports) {
-          spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "not_present"};
+          spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "_not_present"};
         }
         var tvm_report = {};
         if (dbObject.workers.fb_lab_tvm.reports) {
-          tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "not_present"};
+          tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "_not_present"};
         }
         var wl5g_report = {};
         if (dbObject.workers.wl_lab_5g.reports) {
-          wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "not_present"};
+          wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "_not_present"};
         }
         var lte_integ_report = {};
         if (dbObject.workers.lte_integ_test.reports) {
-          lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "not_present"};
+          lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var cwf_integ_report = {};
         if (dbObject.workers.cwf_integ_test && dbObject.workers.cwf_integ_test.reports) {
-          cwf_integ_report = (key in dbObject.workers.cwf_integ_test.reports) ? dbObject.workers.cwf_integ_test.reports[key] : {"verdict": "not_present"};
+          cwf_integ_report = (key in dbObject.workers.cwf_integ_test.reports) ? dbObject.workers.cwf_integ_test.reports[key] : {"verdict": "_not_present"};
         }
 
         this.items.push(
@@ -250,6 +250,9 @@ export default {
       } else if(value.verdict == "fail") {
         newValue.icon = "exclamation-circle-fill"
         newValue.variant = "danger"
+      } else if(value.verdict != "_not_present") {
+        newValue.icon = "exclamation-circle-fill"
+        newValue.variant = "warning"
       }
       return newValue
     },
