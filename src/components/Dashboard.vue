@@ -161,7 +161,7 @@ export default {
           },
           {
             key: 'w_cwf_integ',
-            label: 'LTE INTEG',
+            label: 'CWF INTEG',
             type: 'pass_fail',
             formatter: 'test_worker_formatter',
           },
