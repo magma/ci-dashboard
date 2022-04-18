@@ -136,18 +136,6 @@ export default {
             formatter: 'build_formatter',
           },
           {
-            key: 'w_spirent',
-            label: 'FB Spirent',
-            type: 'pass_fail',
-            formatter: 'test_worker_formatter',
-          },
-          {
-            key: 'w_tvm',
-            label: 'FB TVM',
-            type: 'pass_fail',
-            formatter: 'test_worker_formatter',
-          },
-          {
             key: 'w_wl5g',
             label: 'WL 5G',
             type: 'pass_fail',
