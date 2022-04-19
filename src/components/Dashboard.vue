@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="5">Builds</b-th>
-          <b-th variant="primary" colspan="5">Workers</b-th>
+          <b-th variant="primary" colspan="3">Workers</b-th>
         </b-tr>
       </template>
       <template #cell()="data">
@@ -134,18 +134,6 @@ export default {
             label: 'CWAG',
             type: 'pass_fail',
             formatter: 'build_formatter',
-          },
-          {
-            key: 'w_spirent',
-            label: 'FB Spirent',
-            type: 'pass_fail',
-            formatter: 'test_worker_formatter',
-          },
-          {
-            key: 'w_tvm',
-            label: 'FB TVM',
-            type: 'pass_fail',
-            formatter: 'test_worker_formatter',
           },
           {
             key: 'w_wl5g',
