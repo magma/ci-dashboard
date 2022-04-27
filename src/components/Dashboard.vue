@@ -184,14 +184,6 @@ export default {
         var branch_name = branch_path[branch_path.length - 1]
 
         // get reports
-        var spirent_report = {};
-        if (dbObject.workers.fb_lab_spirent.reports) {
-          spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "_not_present"};
-        }
-        var tvm_report = {};
-        if (dbObject.workers.fb_lab_tvm.reports) {
-          tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "_not_present"};
-        }
         var wl5g_report = {};
         if (dbObject.workers.wl_lab_5g.reports) {
           wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "_not_present"};
@@ -217,8 +209,6 @@ export default {
             b_orc8r: build.orc8r,
             b_nms: build.nms,
             b_cwag: build.cwag,
-            w_spirent: spirent_report,
-            w_tvm: tvm_report,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
             w_cwf_integ: cwf_integ_report,
