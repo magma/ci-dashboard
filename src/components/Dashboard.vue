@@ -219,8 +219,6 @@ export default {
             b_orc8r: build.orc8r,
             b_nms: build.nms,
             b_cwag: build.cwag,
-            w_spirent: spirent_report,
-            w_tvm: tvm_report,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
             w_fed_integ: fed_integ_report,
