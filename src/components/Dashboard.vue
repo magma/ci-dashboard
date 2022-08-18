@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="5">Builds</b-th>
-          <b-th variant="primary" colspan="3">Workers</b-th>
+          <b-th variant="primary" colspan="4">Workers</b-th>
         </b-tr>
       </template>
       <template #cell()="data">
@@ -148,6 +148,12 @@ export default {
             formatter: 'test_worker_formatter',
           },
           {
+            key: 'w_fed_integ',
+            label: 'FED INTEG',
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
+          },
+          {
             key: 'w_cwf_integ',
             label: 'CWF INTEG',
             type: 'pass_fail',
@@ -184,14 +190,6 @@ export default {
         var branch_name = branch_path[branch_path.length - 1]
 
         // get reports
-        var spirent_report = {};
-        if (dbObject.workers.fb_lab_spirent.reports) {
-          spirent_report = (key in dbObject.workers.fb_lab_spirent.reports) ? dbObject.workers.fb_lab_spirent.reports[key] : {"verdict": "_not_present"};
-        }
-        var tvm_report = {};
-        if (dbObject.workers.fb_lab_tvm.reports) {
-          tvm_report = (key in dbObject.workers.fb_lab_tvm.reports) ? dbObject.workers.fb_lab_tvm.reports[key] : {"verdict": "_not_present"};
-        }
         var wl5g_report = {};
         if (dbObject.workers.wl_lab_5g.reports) {
           wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "_not_present"};
@@ -199,6 +197,10 @@ export default {
         var lte_integ_report = {};
         if (dbObject.workers.lte_integ_test.reports) {
           lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "_not_present"};
+        }
+        var fed_integ_report = {};
+        if (dbObject.workers.fed_integ_test.reports) {
+          fed_integ_report = (key in dbObject.workers.fed_integ_test.reports) ? dbObject.workers.fed_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var cwf_integ_report = {};
         if (dbObject.workers.cwf_integ_test && dbObject.workers.cwf_integ_test.reports) {
@@ -217,10 +219,9 @@ export default {
             b_orc8r: build.orc8r,
             b_nms: build.nms,
             b_cwag: build.cwag,
-            w_spirent: spirent_report,
-            w_tvm: tvm_report,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
+            w_fed_integ: fed_integ_report,
             w_cwf_integ: cwf_integ_report,
           })
       }
