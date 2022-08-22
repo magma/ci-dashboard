@@ -148,8 +148,8 @@ export default {
             formatter: 'test_worker_formatter',
           },
           {
-            key: 'w_fed_integ',
-            label: 'FED INTEG',
+            key: 'w_feg_integ',
+            label: 'FEG INTEG',
             type: 'pass_fail',
             formatter: 'test_worker_formatter',
           },
@@ -198,9 +198,9 @@ export default {
         if (dbObject.workers.lte_integ_test.reports) {
           lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "_not_present"};
         }
-        var fed_integ_report = {};
-        if (dbObject.workers.fed_integ_test.reports) {
-          fed_integ_report = (key in dbObject.workers.fed_integ_test.reports) ? dbObject.workers.fed_integ_test.reports[key] : {"verdict": "_not_present"};
+        var feg_integ_report = {};
+        if (dbObject.workers.feg_integ_test.reports) {
+          feg_integ_report = (key in dbObject.workers.feg_integ_test.reports) ? dbObject.workers.feg_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var cwf_integ_report = {};
         if (dbObject.workers.cwf_integ_test && dbObject.workers.cwf_integ_test.reports) {
@@ -221,7 +221,7 @@ export default {
             b_cwag: build.cwag,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
-            w_fed_integ: fed_integ_report,
+            w_feg_integ: feg_integ_report,
             w_cwf_integ: cwf_integ_report,
           })
       }
