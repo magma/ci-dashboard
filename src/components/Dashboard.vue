@@ -106,14 +106,14 @@ export default {
             filter: true
           },
           {
-            key: 'b_arm_agw',
-            label: 'ARM AGW',
+            key: 'b_agw',
+            label: 'AGW',
             type: 'pass_fail',
             formatter: 'build_formatter',
           },
           {
-            key: 'b_agw',
-            label: 'AGW',
+            key: 'b_arm_agw',
+            label: 'ARM AGW',
             type: 'pass_fail',
             formatter: 'build_formatter',
           },
