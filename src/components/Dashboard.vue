@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="6">Builds</b-th>
-          <b-th variant="primary" colspan="4">Workers</b-th>
+          <b-th variant="primary" colspan="5">Workers</b-th>
         </b-tr>
       </template>
       <template #cell()="data">
@@ -148,6 +148,12 @@ export default {
             formatter: 'test_worker_formatter',
           },
           {
+            key: 'w_sudo_python',
+            label: 'SUDO PYTHON',
+            type: 'pass_fail',
+            formatter: 'test_worker_formatter',
+          },
+          {
             key: 'w_lte_integ',
             label: 'LTE INTEG',
             type: 'pass_fail',
@@ -196,6 +202,10 @@ export default {
         var branch_name = branch_path[branch_path.length - 1]
 
         // get reports
+        var sudo_python_report = {};
+        if (dbObject.workers.sudo_python_tests.reports) {
+          sudo_python_report = (key in dbObject.workers.sudo_python_tests.reports) ? dbObject.workers.sudo_python_tests.reports[key] : {"verdict": "_not_present"};
+        }
         var wl5g_report = {};
         if (dbObject.workers.wl_lab_5g.reports) {
           wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "_not_present"};
@@ -225,6 +235,7 @@ export default {
             b_orc8r: build.orc8r,
             b_nms: build.nms,
             b_cwag: build.cwag,
+            w_sudo_python: sudo_python_report,
             w_wl5g: wl5g_report,
             w_lte_integ: lte_integ_report,
             w_feg_integ: feg_integ_report,
