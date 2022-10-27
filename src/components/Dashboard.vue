@@ -155,7 +155,7 @@ export default {
           },
           {
             key: 'w_lte_integ',
-            label: 'LTE INTEG',
+            label: 'LTE INTEG DEV',
             type: 'pass_fail',
             formatter: 'test_worker_formatter',
           },
