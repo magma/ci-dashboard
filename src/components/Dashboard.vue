@@ -221,8 +221,8 @@ export default {
           lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var lte_integ_debian_report = {};
-        if (dbObject.workers.make_debian_lte_integ_test.reports) {
-          lte_integ_debian_report = (key in dbObject.workers.make_debian_lte_integ_test.reports) ? dbObject.workers.make_debian_lte_integ_test.reports[key] : {"verdict": "_not_present"};
+        if (dbObject.workers.debian_lte_integ_test.reports) {
+          lte_integ_debian_report = (key in dbObject.workers.debian_lte_integ_test.reports) ? dbObject.workers.debian_lte_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var feg_integ_report = {};
         if (dbObject.workers.feg_integ_test.reports) {
