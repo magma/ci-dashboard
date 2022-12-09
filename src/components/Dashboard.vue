@@ -40,7 +40,7 @@
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
           <b-th variant="info" colspan="6">Builds</b-th>
-          <b-th variant="primary" colspan="6">Workers</b-th>
+          <b-th variant="primary" colspan="5">Workers</b-th>
         </b-tr>
       </template>
       <template #cell()="data">
@@ -154,12 +154,6 @@ export default {
             formatter: 'test_worker_formatter',
           },
           {
-            key: 'w_lte_integ',
-            label: 'LTE INTEG DEV',
-            type: 'pass_fail',
-            formatter: 'test_worker_formatter',
-          },
-          {
             key: 'w_lte_integ_debian',
             label: 'LTE INTEG DEBIAN',
             type: 'pass_fail',
@@ -216,10 +210,6 @@ export default {
         if (dbObject.workers.wl_lab_5g.reports) {
           wl5g_report = (key in dbObject.workers.wl_lab_5g.reports) ? dbObject.workers.wl_lab_5g.reports[key] : {"verdict": "_not_present"};
         }
-        var lte_integ_report = {};
-        if (dbObject.workers.lte_integ_test.reports) {
-          lte_integ_report = (key in dbObject.workers.lte_integ_test.reports) ? dbObject.workers.lte_integ_test.reports[key] : {"verdict": "_not_present"};
-        }
         var lte_integ_debian_report = {};
         if (dbObject.workers.debian_lte_integ_test.reports) {
           lte_integ_debian_report = (key in dbObject.workers.debian_lte_integ_test.reports) ? dbObject.workers.debian_lte_integ_test.reports[key] : {"verdict": "_not_present"};
@@ -247,7 +237,6 @@ export default {
             b_cwag: build.cwag,
             w_sudo_python: sudo_python_report,
             w_wl5g: wl5g_report,
-            w_lte_integ: lte_integ_report,
             w_lte_integ_debian: lte_integ_debian_report,
             w_feg_integ: feg_integ_report,
             w_cwf_integ: cwf_integ_report,
