@@ -218,7 +218,7 @@ export default {
         }
         var lte_integ_containerized_report = {};
         if (dbObject.workers.containerized_lte_integ_test.reports) {
-          lte_integ_containerized_report = (key in dbObject.workers.containerized_lte_integ_test.reports) ? dbObject.workers.lte_integ_test_containerized.reports[key] : {"verdict": "_not_present"};
+          lte_integ_containerized_report = (key in dbObject.workers.containerized_lte_integ_test.reports) ? dbObject.workers.containerized_lte_integ_test.reports[key] : {"verdict": "_not_present"};
         }
         var lte_integ_debian_report = {};
         if (dbObject.workers.debian_lte_integ_test.reports) {
