@@ -7,14 +7,19 @@ Dashboard consuming data from Magma's Firestore Realtime Database.
 ```
 git clone https://github.com/magma/ci-dashboard.git
 cd ci-dashboard
+
+# Obtain Firebase_config.json by opening the currently deployed dashboard
+# and searching the sources for apiKey. Copy the whole JSON object to Firebase_config.json
+
 npm install
 npm run serve
 ```
 - To view locally, open http://localhost:8080/ on your browser
 - You will need to obtain Firebase API config and add it to Firebase_config.json file
 
-### Deploy to firestore
+### Build and Deploy to firestore
 ```
+npm run build
 firestore login
 firestore deploy
 ```
