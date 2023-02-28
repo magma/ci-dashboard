@@ -39,7 +39,7 @@
         <b-tr>
           <b-th colspan="1"><span class="sr-only">ID</span></b-th>
           <b-th variant="light" colspan="4">Metadata</b-th>
-          <b-th variant="info" colspan="6">Builds</b-th>
+          <b-th variant="info" colspan="5">Builds</b-th>
           <b-th variant="primary" colspan="6">Workers</b-th>
         </b-tr>
       </template>
@@ -108,12 +108,6 @@ export default {
           {
             key: 'b_agw',
             label: 'AGW',
-            type: 'pass_fail',
-            formatter: 'build_formatter',
-          },
-          {
-            key: 'b_arm_agw',
-            label: 'ARM AGW',
             type: 'pass_fail',
             formatter: 'build_formatter',
           },
